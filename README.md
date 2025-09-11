@@ -9,7 +9,7 @@ It consists of two main components:
 ---
 
 ## 📂 Project Structure
-
+```
 secure-headers-scanner/
 ├─ docker-compose.yml
 ├─ README.md
@@ -26,9 +26,7 @@ secure-headers-scanner/
 └─ src/
 ├─ main.jsx
 └─ App.jsx
-
-yaml
-Kodu kopyala
+```
 
 ---
 
@@ -75,6 +73,4 @@ Web Server (Prod): Nginx
 📜 License
 This project is licensed under the MIT.
 
-yaml
-Kodu kopyala
 
