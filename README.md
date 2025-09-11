@@ -40,8 +40,9 @@ docker compose up -d
 UI: http://<server-ip>/
 
 Health check: http://<server-ip>/api/healthz → {"ok":true}
-
-2️⃣ Run without Docker
+```
+### 2️⃣ Run without Docker
+```
 🔹 API
 
 cd secscan-api
@@ -54,12 +55,14 @@ cd secscan-ui
 npm install
 npm run dev
 # http://localhost:5173
-⚙️ Notes
+```
+
+### ⚙️ Notes
 In development, the web UI proxies /api requests to the backend (vite.config.js).
 
 In production, the web UI runs on nginx (:5173).
 
-🛠️ Tech Stack
+### 🛠️ Tech Stack
 Backend: Node.js, Express
 
 Frontend: React, Vite
@@ -68,7 +71,7 @@ Containerization: Docker, Docker Compose
 
 Web Server (Prod): Nginx
 
-📜 License
+### 📜 License
 This project is licensed under the MIT.
 
 
