@@ -4,7 +4,7 @@ A tool to analyze **HTTP security headers** in web applications.
 It consists of two main components:
 
 - **secscan-api** → Node.js (Express) API (`:4000`)
-- **secscan-web** → React (Vite) UI (`:5173`)
+- **secscan-ui** → React (Vite) UI (`:5173`)
 
 ---
 
