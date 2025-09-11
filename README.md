@@ -17,7 +17,7 @@ secure-headers-scanner/
 │ ├─ Dockerfile
 │ ├─ package.json
 │ └─ api.js
-└─ secscan-web/ # React (Vite) UI — dev: :5173, prod (nginx): :5173
+└─ secscan-ui/ # React (Vite) UI — dev: :5173, prod (nginx): :5173
 ├─ Dockerfile
 ├─ nginx.conf
 ├─ package.json
@@ -34,7 +34,7 @@ secure-headers-scanner/
 
 ### 1️⃣ Run with Docker
 
-```bash
+```
 docker compose build --no-cache
 docker compose up -d
 UI: http://<server-ip>/
@@ -43,16 +43,14 @@ Health check: http://<server-ip>/api/healthz → {"ok":true}
 
 2️⃣ Run without Docker
 🔹 API
-bash
-Kodu kopyala
+
 cd secscan-api
 npm install
 npm start
 # http://localhost:4000
 🔹 Web (Dev)
-bash
-Kodu kopyala
-cd secscan-web
+
+cd secscan-ui
 npm install
 npm run dev
 # http://localhost:5173
