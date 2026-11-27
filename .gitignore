@@ -1,0 +1,21 @@
+# Rust
+/target
+**/*.rs.bk
+
+# Node / UI
+node_modules/
+secscan-ui/dist/
+secscan-ui/coverage/
+*.tsbuildinfo
+*.local
+
+# Runtime data & env
+.env
+data/
+*.log
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

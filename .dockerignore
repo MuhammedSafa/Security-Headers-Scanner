@@ -1,0 +1,9 @@
+.git
+.github
+target
+node_modules
+secscan-ui/node_modules
+secscan-ui/dist
+data
+.env
+*.md

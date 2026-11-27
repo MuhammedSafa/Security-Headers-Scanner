@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  rust:
+    name: Rust (fmt, clippy, test)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - uses: Swatinem/rust-cache@v2
+      - name: Check formatting
+        run: cargo fmt --all -- --check
+      - name: Clippy lints
+        run: cargo clippy --workspace --all-targets -- -D warnings
+      - name: Run unit & integration tests
+        run: cargo test --workspace
+
+  ui:
+    name: Frontend (typecheck, lint, test, build)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: secscan-ui
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: secscan-ui/package-lock.json
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm test
+      - run: npm run build
+
+  docker:
+    name: Docker Build Check
+    runs-on: ubuntu-latest
+    needs: [rust, ui]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build API image
+        run: docker build -f crates/secscan-api/Dockerfile -t secscan-api:ci .
+      - name: Build UI image
+        run: docker build -f secscan-ui/Dockerfile -t secscan-ui:ci ./secscan-ui

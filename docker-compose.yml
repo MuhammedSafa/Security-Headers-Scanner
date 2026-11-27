@@ -1,19 +1,26 @@
-version: "3.9"
-
 services:
   api:
     build:
-      context: ./secscan-api
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: crates/secscan-api/Dockerfile
     container_name: secscan-api
     environment:
-      - NODE_ENV=production
-      # İstersen concurrency ayarlarını env’den al:
-      # - SCAN_CONCURRENCY=15
+      - HOST=0.0.0.0
+      - PORT=4000
+      - RUST_LOG=${RUST_LOG:-secscan_api=info,secscan_core=info,tower_http=info}
+      - SCAN_CONCURRENCY=${SCAN_CONCURRENCY:-15}
+      - MAX_DOMAINS_PER_REQUEST=${MAX_DOMAINS_PER_REQUEST:-500}
+      - ALLOW_PRIVATE_NETWORKS=${ALLOW_PRIVATE_NETWORKS:-false}
+      - ALLOW_SELF_SIGNED_TLS=${ALLOW_SELF_SIGNED_TLS:-false}
+      - RATE_LIMIT_PER_MINUTE=${RATE_LIMIT_PER_MINUTE:-30}
+      - CORS_ORIGIN=${CORS_ORIGIN:-}
+      - LAST_SCAN_PATH=/data/last-scan.yaml
+    volumes:
+      - secscan-data:/data
     expose:
       - "4000"
     healthcheck:
-      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:4000/healthz || exit 1"]
+      test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:4000/healthz || exit 1"]
       interval: 30s
       timeout: 5s
       retries: 3
@@ -29,6 +36,8 @@ services:
       api:
         condition: service_healthy
     ports:
-      - "80:80"
+      - "${UI_PORT:-80}:8080"
     restart: unless-stopped
 
+volumes:
+  secscan-data:
